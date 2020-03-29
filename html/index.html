@@ -1,147 +1,186 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <script src="js/hls.js"></script>
-	<script>
-function hide_chat () {
-  document.getElementById('chat').style.visibility = 'hidden';
-	document.getElementById('showhide_chat').onclick = function() { show_chat(); };
-  document.getElementById('showhide_chat').innerHTML = 'Show Chat';
-}
-function show_chat () {
-  document.getElementById('chat').style.visibility = 'visible';
-	document.getElementById('showhide_chat').onclick = function() { hide_chat(); };
-  document.getElementById('showhide_chat').innerHTML = 'Hide Chat';
-}
-</script>
-        <style>
-.container {
-   text-align: center;
- }
 
-.container pre {
-  display: inline-block;
-  text-align: left;
-         }
+<head>
+    <meta charset="utf-8">
+    <script src="/js/hls.js"></script>
+    <script>
+        function hide_chat() {
+            document.getElementById('chat').style.visibility = 'hidden';
+            document.getElementById('button_showhide_chat').onclick = function() {
+                show_chat();
+            };
+            document.getElementById('button_showhide_chat').innerHTML = 'show chat';
+        }
 
-         .topbar {
-             background: rgba(0,0,0,0.5)
-         }
- audio {
-     width: 80px;
-     height: 32px;
- }
- body {
-     margin: 0;
-     padding: 0;
- }
- #page {
-     border-collapse: collapse;
- }
- #page table {
-     height: 100%;
-     width: 100%;
-     border-collapse: collapse;
- }
- #page td {
-     padding: 0; 
-     margin: 0;
- }
- #page iframe {
-     width: 100%;
-     height: 100%;
-     border: 0;
- }
- #chat {
-	visibility: hidden;
- }
-         #video {
-             width: 100%;
-             height: 100%;
-         }
-         .overlay{
-             position: absolute;
-             top: 0;
-             left: 0;
-             width: 100%;
-             height: 100%;
-             z-index: 10;
-             /* background-color: rgba(0,0,0,0.5); /*dim the background*/ */
-         }
-         /* unvisited link */
-         a:link {
-             color: white;
-             font-family: Arial, Helvetica, sans-serif;
-             text-decoration: none;
-	     background-color: black;
-         }
+        function show_chat() {
+            document.getElementById('chat').style.visibility = 'visible';
+            document.getElementById('button_showhide_chat').onclick = function() {
+                hide_chat();
+            };
+            document.getElementById('button_showhide_chat').innerHTML = 'hide chat';
+        }
+    </script>
+    <style>
+        .container {
+            text-align: center;
+        }
 
-         /* visited link */
-         a:visited {
-             color: green;
-	     background-color: black;
-             font-family: Arial, Helvetica, sans-serif;
-         }
-         a:hover {
-             text-decoration: underline;
-         }
+        .container pre {
+            display: inline-block;
+            text-align: left;
+        }
 
-         a:active {
-             text-decoration: underline;
-}
-</style>
+        .topbar {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        audio {
+            width: 80px;
+            height: 32px;
+            background-color: black;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #page {
+            border-collapse: collapse;
+        }
+
+        #page table {
+            height: 100%;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #page td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #page iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        #chat {
+            visibility: hidden;
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            vertical-align: top;
+            background-color: black;
+            color: white;
+            border: 2px solid black;
+            transition-duration: 0.1s;
+            display: inline-block;
+            height: 32;
+            font-family: "Lucida Console", Monaco, monospace;
+        }
+
+        button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            /* background-color: rgba(0,0,0,0.5); /*dim the background*/
+            */
+        }
+
+        /* unvisited link */
+        a:link {
+            color: white;
+            font-family: "Lucida Console", Monaco, monospace;
+            text-decoration: none;
+            background-color: black;
+        }
+
+        /* visited link */
+        a:visited {
+            color: green;
+            background-color: black;
+            font-family: "Lucida Console", Monaco, monospace;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:active {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-    <div id="page" class="background" >
+    <div id="page" class="background">
         <table>
             <tr>
                 <td>
-                 <video id="video" autoplay muted ></video>
-           <script>
-  var video = document.getElementById('video');
-  if(Hls.isSupported()) {
-    var hls = new Hls();
-      hls.loadSource('http://wirklich.kein.fm/live/keinfm/index.m3u8');
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED,function() {
-      video.play();
-  });
- }
- // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
- // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
- // This is using the built-in support of the plain video element, without using hls.js.
- // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
- // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
-  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'http://wirklich.kein.fm/live/keinfm/index.m3u8';
-    video.addEventListener('loadedmetadata',function() {
-      video.play();
-    });
-  }
-</script>
-               </td>
+                    <video id="video" autoplay muted></video>
+                    <script>
+                        var source_url = 'http://wirklich.kein.fm/live/keinfm/index.m3u8';
+                        var video = document.getElementById('video');
+                        if (Hls.isSupported()) {
+                            var hls = new Hls();
+                            hls.loadSource(source_url);
+                            hls.attachMedia(video);
+                            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                                video.play();
+                            });
+                        }
+                        // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+                        // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+                        // This is using the built-in support of the plain video element, without using hls.js.
+                        // Note: it would be more normal to wait on the 'canplay' event below however on Safari (where you are most likely to find built-in HLS support) the video.src URL must be on the user-driven
+                        // white-list before a 'canplay' event will be emitted; the last video event that can be reliably listened-for when the URL is not on the white-list is 'loadedmetadata'.
+                        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                            video.src = source_url;
+                            video.addEventListener('loadedmetadata', function() {
+                                video.play();
+                            });
+                        }
+                    </script>
+                </td>
             </tr>
         </table>
     </div>
 
     <div id="page" class="overlay">
         <table>
-            <tr height="32" class="topbar">
+            <tr class="topbar" height="32">
                 <td>
-                    <audio controls><source src="http://kein.fm:8000/listen?type=.mp3" type="audio/mpeg">Your browser does not support the embedded player.</audio>
-		    <button id='showhide_chat' onClick="show_chat();">Show Chat</button>
-                    <a href="http://kein.fm:8000/listen.m3u" target="_blank">Click here to use your own music player for a better listening experience.</a>
+                    <audio controls>
+                        <source src="http://kein.fm:8000/listen?type=.mp3" type="audio/mpeg">
+                        Your browser does not support the embedded player.
+                    </audio>
+                    <button id='button_showhide_chat' onclick="show_chat();">show chat</button>
+                    <button onclick="window.location.href = 'http://kein.fm:8000/listen.m3u'" target="_blank">use external player (better)</a>
             </tr>
-        <tr>
-            <td>
-		    <!--<div id="chat"> -->
-                <iframe id="chat" src="http://wirklich.kein.fm:9090/?nick=raver...&channels=kein.fm&uio=MT1mYWxzZSYxNj10cnVlJjc9ZmFsc2UmMj10cnVlJjQ9dHJ1ZSY5PXRydWUmMTE9MjA1JjEzPWZhbHNlc3" id="page"></iframe>
-		    <!-- </div> -->
- </td>
-        </tr>
-    </table>
+            <tr>
+                <td>
+                    <iframe id="chat" src="http://wirklich.kein.fm:9090/?nick=raver...&channels=kein.fm&uio=MT1mYWxzZSYxNj10cnVlJjc9ZmFsc2UmMj10cnVlJjQ9dHJ1ZSY5PXRydWUmMTE9MjA1JjEzPWZhbHNlc3" id="page"></iframe>
+                </td>
+            </tr>
+        </table>
     </div>
     </div>
 
 </body>
+
 </html>
